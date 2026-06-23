@@ -24,7 +24,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-primary-dark/95 backdrop-blur-md border-b border-secondary/10 px-3 sm:px-6 flex items-center justify-between transition-colors">
+    <nav className="fixed top-0 left-0 right-0 z-50 h-18 bg-primary-dark/95 backdrop-blur-md border-b border-secondary/10 px-3 sm:px-6 flex items-center justify-between transition-colors">
       {/* Brand Logo & Name */}
       <Link
         to="/"
