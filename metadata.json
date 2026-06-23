@@ -1,0 +1,6 @@
+{
+  "name": "Dokkal Khairu FC",
+  "description": "Official football club website for Dokkal Khairu FC, based in Ilé-Ifẹ̀, Osun State, Nigeria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
