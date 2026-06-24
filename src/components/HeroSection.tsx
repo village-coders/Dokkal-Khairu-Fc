@@ -9,7 +9,7 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
         style={{ 
-          backgroundImage: `linear-gradient(135deg, rgba(5,26,56,0.85) 20%, rgba(5,26,56,0.5) 100%), url(${heroImg})` 
+          backgroundImage: `linear-gradient(135deg, rgba(5,26,56,0.85) 10%, rgba(5,26,56,0.5) 90%), url(${heroImg})` 
         }}
       />
 

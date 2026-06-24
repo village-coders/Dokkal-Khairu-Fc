@@ -1,44 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Player } from '../types';
+import { api } from '../lib/api';
 
-interface SquadSectionProps {
-  players: Player[];
-  loading?: boolean;
-}
-
-const SquadSection: React.FC<SquadSectionProps> = ({ players = [], loading = false }) => {
+const PlayersView: React.FC = () => {
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('ALL');
   const navigate = useNavigate();
 
   const categories = ['ALL', 'GOALKEEPER', 'DEFENDER', 'MIDFIELDER', 'FORWARD'];
 
-  const filteredPlayers = filter === 'ALL' 
-    ? players 
+  useEffect(() => {
+    const loadPlayers = async () => {
+      try {
+        const data = await api.getPlayers();
+        setPlayers(data);
+      } catch (e) {
+        console.warn("Failed to load players.", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPlayers();
+  }, []);
+
+  const filteredPlayers = filter === 'ALL'
+    ? players
     : players.filter(player => player.position.toUpperCase() === filter);
 
   return (
-    <section className="bg-primary py-16 px-4 sm:px-6 lg:px-8 border-b border-secondary/15 relative">
-      <div className="absolute inset-0 bg-[radial-gradient(#1e2d25_1px,transparent_1px)] [background-size:16px_16px] opacity-15 pointer-events-none" />
-      <div className="max-w-7xl mx-auto space-y-10 relative">
+    <div className="bg-primary min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-10">
         
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-cream/70 hover:text-secondary transition-colors font-condensed uppercase tracking-wider text-sm"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+          Back
+        </button>
+
         {/* Heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-secondary/20 pb-4 gap-4">
-          <div className="text-left space-y-1">
-            <h2 className="font-display text-4xl sm:text-5xl text-white font-black uppercase tracking-wide">
-              MEET THE SQUAD
-            </h2>
-            <div className="w-16 h-1 bg-secondary rounded" />
-          </div>
-          <button
-            onClick={() => navigate('/players')}
-            className="flex items-center gap-2 px-6 py-3 bg-secondary text-primary font-condensed font-bold uppercase tracking-wider rounded hover:bg-secondary/90 transition-colors"
-          >
-            View All Players
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </button>
+        <div className="text-left space-y-2">
+          <h1 className="font-display text-5xl sm:text-6xl text-white font-black uppercase tracking-wide">
+            FULL SQUAD
+          </h1>
+          <div className="w-20 h-1 bg-secondary rounded" />
+          <p className="text-cream/60 font-condensed text-lg tracking-wide">
+            {players.length} Players Registered
+          </p>
         </div>
 
         {/* Filters */}
@@ -95,13 +109,13 @@ const SquadSection: React.FC<SquadSectionProps> = ({ players = [], loading = fal
         >
           {loading ? (
             <>
-              {[...Array(4)].map((_, i) => (
+              {[...Array(8)].map((_, i) => (
                 <div key={i} className="animate-pulse flex flex-col justify-end bg-cream/5 rounded overflow-hidden aspect-[3/4] relative">
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-cream/10"></div>
                 </div>
               ))}
             </>
-          ) : filteredPlayers.length > 0 ? filteredPlayers.slice(0, 5).map((player) => (
+          ) : filteredPlayers.length > 0 ? filteredPlayers.map((player) => (
             <div key={player._id} className="player-card">
               
               {/* Jersey Number Background watermark */}
@@ -242,8 +256,8 @@ const SquadSection: React.FC<SquadSectionProps> = ({ players = [], loading = fal
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };
 
-export default SquadSection;
+export default PlayersView;

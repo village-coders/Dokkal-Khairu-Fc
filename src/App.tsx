@@ -14,6 +14,7 @@ import MatchesView from "./components/MatchesView";
 import AboutView from "./components/AboutView";
 import AdminLoginView from "./components/AdminLoginView";
 import AdminHub from "./components/AdminHub";
+import PlayersView from "./components/PlayersView";
 
 import { NewsArticle, Match, Player, GalleryItem } from "./types";
 import { api } from "./lib/api";
@@ -41,6 +42,7 @@ function AppLayout() {
       setAllMatches(matchesRes);
       setPlayers(playersRes);
       setGalleryItems(galleryRes);
+      console.log(galleryRes)
 
       const featured = newsRes.articles.find((a) => a.isFeatured) || newsRes.articles[0] || null;
       setFeaturedNews(featured);
@@ -87,6 +89,7 @@ function AppLayout() {
           <Route path="/news/:slug" element={<SingleNewsView />} />
           <Route path="/matches" element={<MatchesView />} />
           <Route path="/about" element={<AboutView />} />
+          <Route path="/players" element={<PlayersView />} />
           <Route path="/admin" element={<AdminLoginView />} />
           <Route path="/admin/dashboard" element={<AdminHub />} />
           <Route path="*" element={
