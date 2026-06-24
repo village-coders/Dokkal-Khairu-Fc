@@ -321,22 +321,32 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
 
           {/* Right Side - Banner Image */}
           <div 
-            className="relative overflow-hidden rounded-lg"
+            className="relative overflow-hidden rounded-lg bg-primary-dark/50"
             style={{
               minHeight: '300px',
-              backgroundImage: match.countdownBanner 
-                ? `url('${match.countdownBanner}')` 
-                : 'linear-gradient(135deg, rgba(11, 67, 147, 0.3) 0%, rgba(229, 26, 36, 0.2) 100%)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
+            {match.countdownBanner ? (
+              <img 
+                src={match.countdownBanner} 
+                alt="Match Banner" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div 
+                className="absolute inset-0 w-full h-full"
+                style={{ background: 'linear-gradient(135deg, rgba(11, 67, 147, 0.3) 0%, rgba(229, 26, 36, 0.2) 100%)' }}
+              />
+            )}
+            
             {/* Overlay for better text readability if needed */}
             <div 
               className="absolute inset-0"
               style={{
-                background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%)',
+                background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%)',
               }}
             />
             
