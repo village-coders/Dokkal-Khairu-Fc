@@ -44,12 +44,10 @@ export default function HomeView({
           loading={loading}
         />
         <NextMatchCountdown upcomingMatch={upcomingMatch} loading={loading} />
-        <LatestNewsGrid articles={allNews} />
-        <SquadSection players={players} />
         <MediaGallery items={galleryItems} />
+        <SquadSection players={players} />
         <UpcomingMatches matches={allMatches} />
         <RecentResults matches={allMatches} />
-        <ClubMotto />
       </div>
     </>
   );

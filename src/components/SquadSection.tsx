@@ -73,7 +73,7 @@ const SquadSection: React.FC<SquadSectionProps> = ({ players = [] }) => {
             gap: 'var(--space-6)',
           }}
         >
-          {filteredPlayers.length > 0 ? filteredPlayers.map((player) => (
+          {filteredPlayers.length > 0 ? filteredPlayers.slice(0, 4).map((player) => (
             <div key={player._id} className="player-card">
               
               {/* Jersey Number Background watermark */}
