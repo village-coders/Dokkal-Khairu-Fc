@@ -6,9 +6,10 @@ import { Calendar, MapPin, Shield } from "lucide-react";
 
 interface UpcomingMatchesProps {
   matches: Match[];
+  loading?: boolean;
 }
 
-export default function UpcomingMatches({ matches }: UpcomingMatchesProps) {
+export default function UpcomingMatches({ matches, loading = false }: UpcomingMatchesProps) {
   const navigate = useNavigate();
   // Grab up to 3 upcoming matches
   // Grab up to 3 upcoming matches
@@ -59,7 +60,14 @@ export default function UpcomingMatches({ matches }: UpcomingMatchesProps) {
         </div>
 
         {/* Matches Horizontal Grid */}
-        {upcomingList.length > 0 ? (
+        {loading ? (
+          <div className="flex flex-col space-y-4 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-card border border-secondary/15 rounded-xl p-6 h-28 flex">
+              </div>
+            ))}
+          </div>
+        ) : upcomingList.length > 0 ? (
           <div className="flex flex-col space-y-4">
             {upcomingList.map((match) => (
               <div

@@ -37,17 +37,17 @@ export default function HomeView({
         <meta name="description" content="Welcome to the official home of Dokkal Khairu FC. The Khairu Boys from Ilé-Ifẹ̀." />
       </Helmet>
       <div className="pt-[72px] space-y-0">
-        <NewsMarquee articles={allNews} />
+        <NewsMarquee articles={allNews} loading={loading} />
         <HeroSection 
           featuredNews={featuredNews} 
           upcomingMatch={upcomingMatch} 
           loading={loading}
         />
         <NextMatchCountdown upcomingMatch={upcomingMatch} loading={loading} />
-        <MediaGallery items={galleryItems} />
-        <SquadSection players={players} />
-        <UpcomingMatches matches={allMatches} />
-        <RecentResults matches={allMatches} />
+        <MediaGallery items={galleryItems} loading={loading} />
+        <SquadSection players={players} loading={loading} />
+        <UpcomingMatches matches={allMatches} loading={loading} />
+        <RecentResults matches={allMatches} loading={loading} />
       </div>
     </>
   );

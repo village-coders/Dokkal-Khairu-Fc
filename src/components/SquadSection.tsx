@@ -3,9 +3,10 @@ import { Player } from '../types';
 
 interface SquadSectionProps {
   players: Player[];
+  loading?: boolean;
 }
 
-const SquadSection: React.FC<SquadSectionProps> = ({ players = [] }) => {
+const SquadSection: React.FC<SquadSectionProps> = ({ players = [], loading = false }) => {
   const [filter, setFilter] = useState('ALL');
 
   const categories = ['ALL', 'GOALKEEPER', 'DEFENDER', 'MIDFIELDER', 'FORWARD'];
@@ -41,28 +42,36 @@ const SquadSection: React.FC<SquadSectionProps> = ({ players = [] }) => {
             paddingBottom: 'var(--space-4)'
           }}
         >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              style={{
-                padding: 'var(--space-2) var(--space-5)',
-                fontFamily: 'var(--font-condensed)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: 600,
-                letterSpacing: 'var(--tracking-wider)',
-                textTransform: 'uppercase',
-                color: filter === cat ? 'var(--color-gold)' : 'var(--color-text-muted)',
-                backgroundColor: filter === cat ? 'rgba(212, 160, 23, 0.1)' : 'transparent',
-                border: filter === cat ? '1px solid var(--color-gold)' : '1px solid transparent',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              {cat === 'ALL' ? 'ALL PLAYERS' : cat + 'S'}
-            </button>
-          ))}
+          {loading ? (
+            <div className="flex gap-2 animate-pulse">
+              <div className="w-24 h-8 bg-cream/10 rounded"></div>
+              <div className="w-24 h-8 bg-cream/10 rounded"></div>
+              <div className="w-24 h-8 bg-cream/10 rounded"></div>
+            </div>
+          ) : (
+            categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                style={{
+                  padding: 'var(--space-2) var(--space-5)',
+                  fontFamily: 'var(--font-condensed)',
+                  fontSize: 'var(--text-sm)',
+                  fontWeight: 600,
+                  letterSpacing: 'var(--tracking-wider)',
+                  textTransform: 'uppercase',
+                  color: filter === cat ? 'var(--color-gold)' : 'var(--color-text-muted)',
+                  backgroundColor: filter === cat ? 'rgba(212, 160, 23, 0.1)' : 'transparent',
+                  border: filter === cat ? '1px solid var(--color-gold)' : '1px solid transparent',
+                  borderRadius: 'var(--radius-sm)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                {cat === 'ALL' ? 'ALL PLAYERS' : cat + 'S'}
+              </button>
+            ))
+          )}
         </div>
 
         {/* Players Grid */}
@@ -73,7 +82,15 @@ const SquadSection: React.FC<SquadSectionProps> = ({ players = [] }) => {
             gap: 'var(--space-6)',
           }}
         >
-          {filteredPlayers.length > 0 ? filteredPlayers.slice(0, 4).map((player) => (
+          {loading ? (
+            <>
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="animate-pulse flex flex-col justify-end bg-cream/5 rounded overflow-hidden aspect-[3/4] relative">
+                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-cream/10"></div>
+                </div>
+              ))}
+            </>
+          ) : filteredPlayers.length > 0 ? filteredPlayers.slice(0, 5).map((player) => (
             <div key={player._id} className="player-card">
               
               {/* Jersey Number Background watermark */}

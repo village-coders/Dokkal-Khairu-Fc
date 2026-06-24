@@ -29,40 +29,52 @@ export default function HeroSection({ featuredNews, upcomingMatch, loading = fal
       {/* Hero Core Content Grid */}
       <div className="relative max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
         
-        {/* Left Column (60% Desktop) - Text details */}
-        <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left" id="hero_left">
-          <div className="inline-block px-2.5 sm:px-3 py-1 rounded bg-secondary/15 border border-secondary/20 text-secondary font-display text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold">
-            OFFICIAL WEBSITE
+        {loading ? (
+          <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left animate-pulse">
+            <div className="w-32 h-6 bg-secondary/20 rounded"></div>
+            <div className="space-y-2 mt-4">
+              <div className="w-3/4 h-16 sm:h-20 bg-cream/20 rounded"></div>
+              <div className="w-1/2 h-8 sm:h-10 bg-cream/20 rounded"></div>
+            </div>
+            <div className="w-full max-w-lg h-24 bg-cream/20 rounded mt-4"></div>
+            <div className="flex gap-4 mt-6">
+              <div className="w-32 h-12 bg-secondary/30 rounded"></div>
+              <div className="w-32 h-12 bg-cream/20 rounded"></div>
+            </div>
           </div>
-          <div className="space-y-1 sm:space-y-2">
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-black leading-none drop-shadow-md">
-              DOKKAL KHAIRU FC
-            </h1>
-            <p className="font-accent italic text-secondary text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-wide">
-              Ilé-Ifẹ̀'s Pride. Osun's Glory.
+        ) : (
+          <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left" id="hero_left">
+            <div className="inline-block px-2.5 sm:px-3 py-1 rounded bg-secondary/15 border border-secondary/20 text-secondary font-display text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold">
+              OFFICIAL WEBSITE
+            </div>
+            <div className="space-y-1 sm:space-y-2">
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-black leading-none drop-shadow-md">
+                DOKKAL KHAIRU FC
+              </h1>
+              <p className="font-accent italic text-secondary text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-wide">
+                Ilé-Ifẹ̀'s Pride. Osun's Glory.
+              </p>
+            </div>
+            <p className="text-xs sm:text-sm md:text-base text-cream/80 font-light leading-relaxed max-w-lg sm:max-w-xl">
+              Hailing from the ancient, historical heartland of Nigeria—the cradle of civilization—The Khairu Boys embody the relentless spirit of sportsmanship, collective growth, and football mastery.
             </p>
-          </div>
-          <p className="text-xs sm:text-sm md:text-base text-cream/80 font-light leading-relaxed max-w-lg sm:max-w-xl">
-            Hailing from the ancient, historical heartland of Nigeria—the cradle of civilization—The Khairu Boys embody the relentless spirit of sportsmanship, collective growth, and football mastery.
-          </p>
 
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2">
-            <Link
-              to="/news"
-              className="w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded bg-secondary text-primary-dark font-display font-bold text-xs sm:text-sm tracking-widest hover:brightness-110 hover:shadow-glow hover:-translate-y-0.5 transition-all cursor-pointer shadow-md text-center"
-            >
-              LATEST NEWS
-            </Link>
-            <Link
-              to="/matches"
-              className="w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded border border-secondary/60 text-secondary hover:text-white hover:border-white font-display text-xs sm:text-sm tracking-widest hover:bg-secondary/5 transition-all cursor-pointer text-center"
-            >
-              VIEW FIXTURES
-            </Link>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2">
+              <Link
+                to="/news"
+                className="w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded bg-secondary text-primary-dark font-display font-bold text-xs sm:text-sm tracking-widest hover:brightness-110 hover:shadow-glow hover:-translate-y-0.5 transition-all cursor-pointer shadow-md text-center"
+              >
+                LATEST NEWS
+              </Link>
+              <Link
+                to="/matches"
+                className="w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded border border-secondary/60 text-secondary hover:text-white hover:border-white font-display text-xs sm:text-sm tracking-widest hover:bg-secondary/5 transition-all cursor-pointer text-center"
+              >
+                VIEW FIXTURES
+              </Link>
+            </div>
           </div>
-        </div>
-
-        {/* Right Column (40% Desktop) - Recent update + compact matchup */}
+        )}
 
       </div>
     </section>

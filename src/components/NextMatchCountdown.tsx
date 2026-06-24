@@ -33,9 +33,51 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
 
   if (loading && !upcomingMatch) {
     return (
-      <div style={{ padding: 'var(--space-8) 0', textAlign: 'center' }}>
-        <p style={{ color: 'var(--color-text-muted)' }}>Loading Match Details...</p>
-      </div>
+      <section className="bg-primary-dark py-8 sm:py-12 px-3 sm:px-6 lg:px-8 border-b border-secondary/10 relative">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 relative z-10 animate-pulse">
+          <div className="text-left space-y-1 sm:space-y-2">
+            <div className="w-64 h-8 sm:h-10 bg-secondary/20 rounded"></div>
+            <div className="w-16 h-1 bg-secondary rounded" />
+          </div>
+          <div 
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 border border-white/5"
+            style={{
+              background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%)',
+              borderRadius: 'var(--radius-xl)',
+              padding: 'var(--space-6) sm:var(--space-8)'
+            }}
+          >
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-32 h-6 bg-white/10 rounded"></div>
+                <div className="w-48 h-4 bg-white/10 rounded"></div>
+              </div>
+              <div className="flex items-center justify-between w-full gap-4">
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-[70px] h-[70px] rounded-full bg-white/10 mb-2"></div>
+                  <div className="w-24 h-4 bg-white/10 rounded"></div>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-8 h-8 bg-white/10 rounded"></div>
+                </div>
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-[70px] h-[70px] rounded-full bg-white/10 mb-2"></div>
+                  <div className="w-24 h-4 bg-white/10 rounded"></div>
+                </div>
+              </div>
+              <div className="flex justify-center gap-3 sm:gap-4 flex-wrap">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="flex flex-col items-center">
+                    <div className="w-16 h-16 sm:h-20 bg-white/10 rounded-md"></div>
+                    <div className="w-10 h-3 bg-white/10 rounded mt-2"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg bg-white/10" style={{ minHeight: '300px' }}></div>
+          </div>
+        </div>
+      </section>
     );
   }
 

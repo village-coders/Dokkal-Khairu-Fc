@@ -3,9 +3,10 @@ import { GalleryItem } from '../types';
 
 interface MediaGalleryProps {
   items: GalleryItem[];
+  loading?: boolean;
 }
 
-const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [] }) => {
+const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false }) => {
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -92,32 +93,46 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [] }) => {
             paddingBottom: 'var(--space-4)'
           }}
         >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              style={{
-                padding: 'var(--space-2) var(--space-4)',
-                fontFamily: 'var(--font-condensed)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: 600,
-                letterSpacing: 'var(--tracking-wider)',
-                textTransform: 'uppercase',
-                color: activeCategory === cat ? 'var(--color-gold)' : 'var(--color-text-muted)',
-                backgroundColor: activeCategory === cat ? 'rgba(212, 160, 23, 0.1)' : 'transparent',
-                border: activeCategory === cat ? '1px solid var(--color-gold)' : '1px solid transparent',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              {cat}
-            </button>
-          ))}
+          {loading ? (
+            <div className="flex gap-2 animate-pulse">
+              <div className="w-20 h-8 bg-cream/10 rounded"></div>
+              <div className="w-24 h-8 bg-cream/10 rounded"></div>
+              <div className="w-20 h-8 bg-cream/10 rounded"></div>
+            </div>
+          ) : (
+            categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                style={{
+                  padding: 'var(--space-2) var(--space-4)',
+                  fontFamily: 'var(--font-condensed)',
+                  fontSize: 'var(--text-sm)',
+                  fontWeight: 600,
+                  letterSpacing: 'var(--tracking-wider)',
+                  textTransform: 'uppercase',
+                  color: activeCategory === cat ? 'var(--color-gold)' : 'var(--color-text-muted)',
+                  backgroundColor: activeCategory === cat ? 'rgba(212, 160, 23, 0.1)' : 'transparent',
+                  border: activeCategory === cat ? '1px solid var(--color-gold)' : '1px solid transparent',
+                  borderRadius: 'var(--radius-sm)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                {cat}
+              </button>
+            ))
+          )}
         </div>
 
         {/* Gallery Carousel */}
-        {filteredItems.length > 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 animate-pulse">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="aspect-square bg-cream/10 rounded-lg"></div>
+            ))}
+          </div>
+        ) : filteredItems.length > 0 ? (
           <div className="relative">
             {/* Carousel Container */}
             <div className="relative overflow-hidden" ref={sliderRef}>

@@ -6,9 +6,10 @@ import { Shield, Play, Calendar, Trophy } from "lucide-react";
 
 interface RecentResultsProps {
   matches: Match[];
+  loading?: boolean;
 }
 
-export default function RecentResults({ matches }: RecentResultsProps) {
+export default function RecentResults({ matches, loading = false }: RecentResultsProps) {
   const navigate = useNavigate();
   // Grab up to 3 completed matches
   // Grab up to 3 completed matches
@@ -58,7 +59,13 @@ export default function RecentResults({ matches }: RecentResultsProps) {
         </div>
 
         {/* 3-Column horizontal cards */}
-        {completedList.length > 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-card border border-secondary/10 rounded-xl p-6 h-48"></div>
+            ))}
+          </div>
+        ) : completedList.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {completedList.map((match) => {
               const homeScore = match.homeScore ?? 0;
