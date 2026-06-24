@@ -144,25 +144,29 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
             >
               {/* Team 1 (Dokkal Khairu) */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, minWidth: '100px' }}>
-                <div 
-                  style={{ 
-                    width: '70px', 
-                    height: '70px', 
-                    borderRadius: '50%', 
-                    backgroundColor: 'var(--color-green)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '1.5rem',
-                    color: 'var(--color-gold)',
-                    border: '3px solid var(--color-gold)',
-                    boxShadow: 'var(--shadow-gold)',
-                    marginBottom: 'var(--space-2)'
-                  }}
-                >
-                  DK
-                </div>
+                {match.homeTeam?.logo?.url ? (
+                  <img src={match.homeTeam.logo.url} alt={match.homeTeam.name} style={{ width: '70px', height: '70px', objectFit: 'contain', marginBottom: 'var(--space-2)' }} />
+                ) : (
+                  <div 
+                    style={{ 
+                      width: '70px', 
+                      height: '70px', 
+                      borderRadius: '50%', 
+                      backgroundColor: 'var(--color-green)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      fontFamily: 'var(--font-display)',
+                      fontSize: '1.5rem',
+                      color: 'var(--color-gold)',
+                      border: '3px solid var(--color-gold)',
+                      boxShadow: 'var(--shadow-gold)',
+                      marginBottom: 'var(--space-2)'
+                    }}
+                  >
+                    DK
+                  </div>
+                )}
                 <span className="font-display" style={{ fontSize: 'var(--text-base)', color: 'white', textAlign: 'center', lineHeight: '1.2' }}>
                   {match.homeTeam?.name}
                 </span>
@@ -175,24 +179,28 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
 
               {/* Team 2 (Opponent) */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, minWidth: '100px' }}>
-                <div 
-                  style={{ 
-                    width: '70px', 
-                    height: '70px', 
-                    borderRadius: '50%', 
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '1.5rem',
-                    color: 'var(--color-text-muted)',
-                    border: '3px solid var(--color-mid-grey)',
-                    marginBottom: 'var(--space-2)'
-                  }}
-                >
-                  {opponentName ? opponentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'OP'}
-                </div>
+                {match.awayTeam?.logo?.url ? (
+                  <img src={match.awayTeam.logo.url} alt={match.awayTeam.name} style={{ width: '70px', height: '70px', objectFit: 'contain', marginBottom: 'var(--space-2)' }} />
+                ) : (
+                  <div 
+                    style={{ 
+                      width: '70px', 
+                      height: '70px', 
+                      borderRadius: '50%', 
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      fontFamily: 'var(--font-display)',
+                      fontSize: '1.5rem',
+                      color: 'var(--color-text-muted)',
+                      border: '3px solid var(--color-mid-grey)',
+                      marginBottom: 'var(--space-2)'
+                    }}
+                  >
+                    {opponentName ? opponentName.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase() : 'OP'}
+                  </div>
+                )}
                 <span className="font-display" style={{ fontSize: 'var(--text-base)', color: 'white', textAlign: 'center', lineHeight: '1.2' }}>
                   {match.awayTeam?.name}
                 </span>
@@ -312,7 +320,6 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
           </div>
 
           {/* Right Side - Banner Image */}
-          {console.log(match.countdownBanner)}
           <div 
             className="relative overflow-hidden rounded-lg"
             style={{
