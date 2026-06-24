@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Match } from '../types';
+import defaultBanner from '../assets/images/next-match-banner.jpeg';
 
 interface NextMatchCountdownProps {
   upcomingMatch: Match | null;
@@ -97,7 +98,7 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
   });
 
   return (
-    <section className="bg-primary-dark py-8 sm:py-12 px-3 sm:px-6 lg:px-8 border-b border-secondary/10 relative">
+    <section style={{height: "500px !important"}} className="bg-primary-dark py-8 sm:py-12 px-3 sm:px-6 lg:px-8 border-b border-secondary/10 relative">
       <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 relative z-10">
         
         {/* Component Title */}
@@ -109,7 +110,7 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
         </div>
 
         {/* 50/50 Split Layout */}
-        <div 
+        {/* <div 
           className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"
           style={{
             background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%)',
@@ -117,9 +118,16 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
             padding: 'var(--space-6) sm:var(--space-8)',
             border: '1px solid rgba(255,255,255,0.05)',
           }}
-        >
+        > */}
           {/* Left Side - Countdown */}
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6"
+             style={{
+            background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%)',
+            borderRadius: 'var(--radius-xl)',
+            padding: 'var(--space-6) sm:var(--space-8)',
+            border: '1px solid rgba(255,255,255,0.05)',
+          }}
+          >
             {/* Top Info Bar */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
@@ -320,47 +328,9 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
           </div>
 
           {/* Right Side - Banner Image */}
-          <div 
-            className="relative overflow-hidden rounded-lg bg-primary-dark/50"
-            style={{
-              minHeight: '300px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {match.countdownBanner ? (
-              <img 
-                src={match.countdownBanner} 
-                alt="Match Banner" 
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : (
-              <div 
-                className="absolute inset-0 w-full h-full"
-                style={{ background: 'linear-gradient(135deg, rgba(11, 67, 147, 0.3) 0%, rgba(229, 26, 36, 0.2) 100%)' }}
-              />
-            )}
-            
-            {/* Overlay for better text readability if needed */}
-            <div 
-              className="absolute inset-0"
-              style={{
-                background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%)',
-              }}
-            />
-            
-            {/* Optional: Add a label or overlay text */}
-            <div className="absolute bottom-4 left-4 right-4">
-              <div className="bg-primary-dark/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-secondary/20 inline-block">
-                <p className="font-display text-xs sm:text-sm text-secondary uppercase tracking-wider font-bold">
-                  Countdown To Kickoff
-                </p>
-              </div>
-            </div>
-          </div>
+          
 
-        </div>
+        {/* </div> */}
 
       </div>
     </section>

@@ -7,18 +7,10 @@ interface MediaGalleryProps {
 }
 
 const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false }) => {
-  const [activeCategory, setActiveCategory] = useState('ALL');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(4);
   const sliderRef = useRef<HTMLDivElement>(null);
-
-  // Extract unique categories from items
-  const categories = ['ALL', ...Array.from(new Set(items.map(item => item.category)))];
-
-  const filteredItems = activeCategory === 'ALL'
-    ? items
-    : items.filter(item => item.category === activeCategory);
 
   // Update items per view based on screen size
   useEffect(() => {
@@ -39,12 +31,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false
     return () => window.removeEventListener('resize', updateItemsPerView);
   }, []);
 
-  // Reset slide when category changes
-  useEffect(() => {
-    setCurrentSlide(0);
-  }, [activeCategory]);
-
-  const totalSlides = Math.max(1, Math.ceil(filteredItems.length / itemsPerView));
+  const totalSlides = Math.max(1, Math.ceil(items.length / itemsPerView));
   const canGoNext = currentSlide < totalSlides - 1;
   const canGoPrev = currentSlide > 0;
 
@@ -60,11 +47,11 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false
     }
   };
 
-  const lightboxImage = lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
+  const lightboxImage = lightboxIndex !== null ? items[lightboxIndex] : null;
 
   const getVisibleItems = () => {
     const start = currentSlide * itemsPerView;
-    return filteredItems.slice(start, start + itemsPerView);
+    return items.slice(start, start + itemsPerView);
   };
 
   return (
@@ -81,50 +68,6 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false
           </div>
         </div>
 
-        {/* Filters */}
-        <div 
-          style={{
-            display: 'flex',
-            gap: 'var(--space-2)',
-            marginBottom: 'var(--space-8)',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            borderBottom: '1px solid var(--color-mid-grey)',
-            paddingBottom: 'var(--space-4)'
-          }}
-        >
-          {loading ? (
-            <div className="flex gap-2 animate-pulse">
-              <div className="w-20 h-8 bg-cream/10 rounded"></div>
-              <div className="w-24 h-8 bg-cream/10 rounded"></div>
-              <div className="w-20 h-8 bg-cream/10 rounded"></div>
-            </div>
-          ) : (
-            categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                style={{
-                  padding: 'var(--space-2) var(--space-4)',
-                  fontFamily: 'var(--font-condensed)',
-                  fontSize: 'var(--text-sm)',
-                  fontWeight: 600,
-                  letterSpacing: 'var(--tracking-wider)',
-                  textTransform: 'uppercase',
-                  color: activeCategory === cat ? 'var(--color-gold)' : 'var(--color-text-muted)',
-                  backgroundColor: activeCategory === cat ? 'rgba(212, 160, 23, 0.1)' : 'transparent',
-                  border: activeCategory === cat ? '1px solid var(--color-gold)' : '1px solid transparent',
-                  borderRadius: 'var(--radius-sm)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                {cat}
-              </button>
-            ))
-          )}
-        </div>
-
         {/* Gallery Carousel */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 animate-pulse">
@@ -132,7 +75,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false
               <div key={i} className="aspect-square bg-cream/10 rounded-lg"></div>
             ))}
           </div>
-        ) : filteredItems.length > 0 ? (
+        ) : items.length > 0 ? (
           <div className="relative">
             {/* Carousel Container */}
             <div className="relative overflow-hidden" ref={sliderRef}>
@@ -142,7 +85,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false
                   transform: `translateX(-${currentSlide * (100 / itemsPerView)}%)`,
                 }}
               >
-                {filteredItems.map((item, index) => (
+                {items.map((item, index) => (
                   <div 
                     key={item._id} 
                     className="gallery-item card-hover flex-shrink-0 px-2"
@@ -272,16 +215,16 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ items = [], loading = false
               </div>
 
               {/* Lightbox Navigation */}
-              {filteredItems.length > 1 && (
+              {items.length > 1 && lightboxIndex !== null && (
                 <div className="flex justify-center gap-4 mt-6">
                   <button
-                    onClick={() => setLightboxIndex((lightboxIndex - 1 + filteredItems.length) % filteredItems.length)}
+                    onClick={() => setLightboxIndex((lightboxIndex - 1 + items.length) % items.length)}
                     className="px-4 py-2 bg-secondary/20 hover:bg-secondary/40 text-white rounded transition-colors"
                   >
                     ‹ Previous
                   </button>
                   <button
-                    onClick={() => setLightboxIndex((lightboxIndex + 1) % filteredItems.length)}
+                    onClick={() => setLightboxIndex((lightboxIndex + 1) % items.length)}
                     className="px-4 py-2 bg-secondary/20 hover:bg-secondary/40 text-white rounded transition-colors"
                   >
                     Next ›
