@@ -38,11 +38,7 @@ export default function HomeView({
       </Helmet>
       <div className="pt-[72px] space-y-0">
         <NewsMarquee articles={allNews} loading={loading} />
-        <HeroSection 
-          featuredNews={featuredNews} 
-          upcomingMatch={upcomingMatch} 
-          loading={loading}
-        />
+        <HeroSection />
         <NextMatchCountdown upcomingMatch={upcomingMatch} loading={loading} />
         <MediaGallery items={galleryItems} loading={loading} />
         <SquadSection players={players} loading={loading} />
