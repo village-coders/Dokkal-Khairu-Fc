@@ -7,6 +7,8 @@ export default function AdminPlayers({ triggerToast }: { triggerToast: (msg: str
   const [activeTab, setActiveTab] = useState<"list" | "form">("list");
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   // Form state
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -70,6 +72,7 @@ export default function AdminPlayers({ triggerToast }: { triggerToast: (msg: str
       return;
     }
     
+    setSaving(true);
     try {
       const payload = {
         name,
@@ -91,10 +94,12 @@ export default function AdminPlayers({ triggerToast }: { triggerToast: (msg: str
         triggerToast("Player added successfully.");
       }
       resetForm();
-      loadPlayers();
+      await loadPlayers();
       setActiveTab("list");
     } catch (err: any) {
       triggerToast(err.message || "Failed to save player", true);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -112,6 +117,7 @@ export default function AdminPlayers({ triggerToast }: { triggerToast: (msg: str
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setUploading(true);
     const reader = new FileReader();
     reader.onloadend = async () => {
       try {
@@ -120,6 +126,8 @@ export default function AdminPlayers({ triggerToast }: { triggerToast: (msg: str
         triggerToast("Image uploaded.");
       } catch (err) {
         triggerToast("Failed to upload image.", true);
+      } finally {
+        setUploading(false);
       }
     };
     reader.readAsDataURL(file);
@@ -220,13 +228,16 @@ export default function AdminPlayers({ triggerToast }: { triggerToast: (msg: str
               </div>
               <div className="col-span-2">
                 <label className="block text-xs font-bold mb-1">PLAYER PHOTO (UPLOAD OR URL)</label>
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="mb-2 block text-xs" />
+                <div className="flex items-center gap-4 mb-2">
+                  <input type="file" accept="image/*" onChange={handleImageUpload} className="block text-xs" disabled={uploading} />
+                  {uploading && <span className="text-xs text-secondary animate-pulse">Uploading...</span>}
+                </div>
                 <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="Image URL" className="w-full border p-2 rounded" />
                 {imageUrl && <img src={imageUrl} alt="preview" className="h-20 mt-2 object-cover rounded" />}
               </div>
             </div>
-            <button type="submit" className="px-6 py-2 bg-secondary text-primary-dark font-bold tracking-widest rounded mt-4 uppercase">
-              {editingId ? "SAVE CHANGES" : "ADD PLAYER"}
+            <button type="submit" disabled={saving || uploading} className="px-6 py-2 bg-secondary text-primary-dark font-bold tracking-widest rounded mt-4 uppercase disabled:opacity-50 disabled:cursor-not-allowed">
+              {saving ? "SAVING..." : editingId ? "SAVE CHANGES" : "ADD PLAYER"}
             </button>
           </form>
         </div>

@@ -42,6 +42,7 @@ export default function AdminHub({}: AdminHubProps) {
   const [newsSummary, setNewsSummary] = useState("");
   const [newsContent, setNewsContent] = useState("");
   const [newsCategory, setNewsCategory] = useState<NewsArticle["category"]>("Club News");
+  const [newsSaving, setNewsSaving] = useState(false);
   const [newsTags, setNewsTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [newsFeatured, setNewsFeatured] = useState(false);
@@ -58,6 +59,7 @@ export default function AdminHub({}: AdminHubProps) {
   const [matchDate, setMatchDate] = useState("");
   const [venue, setVenue] = useState("");
   const [competition, setCompetition] = useState("");
+  const [matchSaving, setMatchSaving] = useState(false);
   const [matchStatus, setMatchStatus] = useState<'upcoming' | 'live' | 'completed'>("upcoming");
   const [matchweek, setMatchweek] = useState("");
   const [highlights, setHighlights] = useState("");
@@ -71,6 +73,7 @@ export default function AdminHub({}: AdminHubProps) {
   const [scoreAway, setScoreAway] = useState<number | "">("");
   const [scoreStatus, setScoreStatus] = useState<'upcoming' | 'live' | 'completed'>("completed");
   const [scoreHighlights, setScoreHighlights] = useState("");
+  const [scoreSaving, setScoreSaving] = useState(false);
 
   const categories: NewsArticle["category"][] = [
     "Club News", "Match Report", "Transfer", "Youth", "Community", "General"
@@ -166,6 +169,7 @@ export default function AdminHub({}: AdminHubProps) {
       return;
     }
 
+    setNewsSaving(true);
     try {
       if (editingNewsId) {
         await api.updateNews(editingNewsId, {
@@ -198,6 +202,8 @@ export default function AdminHub({}: AdminHubProps) {
     } catch (err: any) {
       console.error(err);
       triggerToast(err.message || "Failed to catalog publication.", true);
+    } finally {
+      setNewsSaving(false);
     }
   };
 
@@ -245,6 +251,7 @@ export default function AdminHub({}: AdminHubProps) {
       return;
     }
 
+    setMatchSaving(true);
     try {
       if (editingMatchId) {
         await api.updateMatch(editingMatchId, {
@@ -283,6 +290,8 @@ export default function AdminHub({}: AdminHubProps) {
       setActiveTab("match_list");
     } catch (err: any) {
       triggerToast(err.message || "Failed to register matchup.", true);
+    } finally {
+      setMatchSaving(false);
     }
   };
 
@@ -347,6 +356,7 @@ export default function AdminHub({}: AdminHubProps) {
     e.preventDefault();
     if (!scoreMatchId) return;
 
+    setScoreSaving(true);
     try {
       await api.updateMatch(scoreMatchId, {
         homeScore: scoreHome !== "" ? Number(scoreHome) : null,
@@ -354,12 +364,14 @@ export default function AdminHub({}: AdminHubProps) {
         status: scoreStatus,
         highlights: scoreHighlights
       });
-      triggerToast("Match scoreboard and state updated.");
+      triggerToast("Live match data synced successfully.");
       setScoreMatchId(null);
       await loadWorkspaceData();
       setActiveTab("match_list");
-    } catch (err: any) {
-      triggerToast("Failed to publish scoreboard.", true);
+    } catch (err) {
+      triggerToast("Failed to sync match data.", true);
+    } finally {
+      setScoreSaving(false);
     }
   };
 
@@ -1151,9 +1163,10 @@ export default function AdminHub({}: AdminHubProps) {
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2.5 bg-secondary text-primary-dark font-display text-xs tracking-widest font-black uppercase rounded shadow hover:brightness-105 duration-150 cursor-pointer"
+                      disabled={matchSaving || countdownBannerLoading}
+                      className="px-5 py-2.5 bg-secondary text-primary-dark font-display text-xs tracking-widest font-black uppercase rounded shadow hover:brightness-105 duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {editingMatchId ? "SAVE FIXTURE METRICS" : "SCHEDULE FIXTURE"}
+                      {matchSaving ? "SAVING..." : editingMatchId ? "SAVE FIXTURE METRICS" : "SCHEDULE FIXTURE"}
                     </button>
                   </div>
 
@@ -1250,9 +1263,10 @@ export default function AdminHub({}: AdminHubProps) {
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2.5 bg-secondary text-primary-dark font-display text-xs tracking-widest font-black uppercase rounded shadow hover:brightness-105 duration-150 cursor-pointer text-center"
+                      disabled={scoreSaving}
+                      className="px-5 py-2.5 bg-secondary text-primary-dark font-display text-xs tracking-widest font-black uppercase rounded shadow hover:brightness-105 duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      PUBLISH OUTCOME ➔
+                      {scoreSaving ? "PUBLISHING..." : "PUBLISH OUTCOME ➔"}
                     </button>
                   </div>
 

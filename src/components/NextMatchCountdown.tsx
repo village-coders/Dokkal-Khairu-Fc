@@ -312,12 +312,13 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
           </div>
 
           {/* Right Side - Banner Image */}
+          {console.log(match.countdownBanner)}
           <div 
             className="relative overflow-hidden rounded-lg"
             style={{
               minHeight: '300px',
               backgroundImage: match.countdownBanner 
-                ? `url(${match.countdownBanner})` 
+                ? `url('${match.countdownBanner}')` 
                 : 'linear-gradient(135deg, rgba(11, 67, 147, 0.3) 0%, rgba(229, 26, 36, 0.2) 100%)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',

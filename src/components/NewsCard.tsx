@@ -16,7 +16,7 @@ export default function NewsCard({ article, onNavigate }: NewsCardProps) {
 
   return (
     <article 
-      onClick={() => { if (onNavigate) { onNavigate(`news_${article.slug}`); } else { navigate(`/news/${article.slug}`); } }}
+      onClick={() => { if (onNavigate) { onNavigate(`/news/${article.slug}`); } else { navigate(`/news/${article.slug}`); } }}
       className="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-hover hover:scale-[1.01] hover:shadow-glow border border-black/5 hover:border-secondary/50 transition-all duration-300 flex flex-col justify-between cursor-pointer h-full text-left"
     >
       {/* Category photo container */}
