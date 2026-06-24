@@ -40,6 +40,7 @@ export interface Match {
   status: 'upcoming' | 'live' | 'completed';
   matchweek?: number;
   highlights?: string; // YouTube URL
+  countdownBanner?: string; // Image URL for countdown banner
   createdAt: string;
 }
 

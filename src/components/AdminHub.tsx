@@ -61,6 +61,9 @@ export default function AdminHub({}: AdminHubProps) {
   const [matchStatus, setMatchStatus] = useState<'upcoming' | 'live' | 'completed'>("upcoming");
   const [matchweek, setMatchweek] = useState("");
   const [highlights, setHighlights] = useState("");
+  const [countdownBannerUrl, setCountdownBannerUrl] = useState("");
+  const [countdownBannerPreview, setCountdownBannerPreview] = useState<string | null>(null);
+  const [countdownBannerLoading, setCountdownBannerLoading] = useState(false);
   
   // Form State: Score updates
   const [scoreMatchId, setScoreMatchId] = useState<string | null>(null);
@@ -254,7 +257,8 @@ export default function AdminHub({}: AdminHubProps) {
           competition,
           status: matchStatus,
           matchweek: matchweek ? parseInt(matchweek) : undefined,
-          highlights
+          highlights,
+          countdownBanner: countdownBannerUrl
         });
         triggerToast("Fixture details updated successfully.");
       } else {
@@ -268,7 +272,8 @@ export default function AdminHub({}: AdminHubProps) {
           competition,
           status: matchStatus,
           matchweek: matchweek ? parseInt(matchweek) : undefined,
-          highlights
+          highlights,
+          countdownBanner: countdownBannerUrl
         });
         triggerToast("Fixture registered successfully.");
       }
@@ -307,6 +312,8 @@ export default function AdminHub({}: AdminHubProps) {
     setMatchStatus(m.status);
     setMatchweek(m.matchweek ? m.matchweek.toString() : "");
     setHighlights(m.highlights || "");
+    setCountdownBannerUrl((m as any).countdownBanner || "");
+    setCountdownBannerPreview(null);
     setActiveTab("match_form");
   };
 
@@ -322,6 +329,8 @@ export default function AdminHub({}: AdminHubProps) {
     setMatchStatus("upcoming");
     setMatchweek("");
     setHighlights("");
+    setCountdownBannerUrl("");
+    setCountdownBannerPreview(null);
   };
 
   // Score Updates Trigger
@@ -1077,6 +1086,58 @@ export default function AdminHub({}: AdminHubProps) {
                         className="w-full px-4 py-2.5 rounded bg-cream/35 border border-gray-200 focus:outline-none focus:border-secondary"
                       />
                     </div>
+                  </div>
+
+                  {/* Countdown Banner Upload */}
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-mono font-bold tracking-widest text-[#111111]/60 uppercase block">COUNTDOWN BANNER IMAGE</label>
+                    <div className="flex items-center space-x-4">
+                      {(countdownBannerUrl || countdownBannerPreview) && (
+                        <img src={countdownBannerPreview || countdownBannerUrl} className="w-24 h-16 object-cover rounded shadow" alt="countdown banner preview" />
+                      )}
+                      <label className="flex-1 border-2 border-dashed border-secondary/35 rounded-xl py-4 px-3 flex flex-col items-center justify-center cursor-pointer hover:bg-secondary/5 transition-all text-center">
+                        <Upload className="w-5 h-5 text-secondary mb-1 shrink-0" />
+                        <span className="text-xs font-semibold uppercase text-secondary tracking-wider">
+                          {countdownBannerLoading ? "Uploading..." : "SELECT BANNER IMAGE"}
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const previewUrl = URL.createObjectURL(file);
+                            setCountdownBannerPreview(previewUrl);
+                            setCountdownBannerLoading(true);
+                            const reader = new FileReader();
+                            reader.onloadend = async () => {
+                              const base64Str = reader.result as string;
+                              try {
+                                const uploadRes = await api.uploadImage(base64Str, file.name);
+                                setCountdownBannerUrl(uploadRes.url);
+                                setCountdownBannerPreview(null);
+                                triggerToast("Banner image uploaded successfully.");
+                              } catch (err: any) {
+                                console.error(err);
+                                triggerToast("Failed to upload banner image.", true);
+                                setCountdownBannerPreview(null);
+                              } finally {
+                                setCountdownBannerLoading(false);
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Or enter banner image URL path manually"
+                      value={countdownBannerUrl}
+                      onChange={(e) => setCountdownBannerUrl(e.target.value)}
+                      className="w-full mt-1.5 px-3 py-2 rounded bg-cream/35 border border-gray-200 text-xs text-primary focus:outline-none"
+                    />
                   </div>
 
                   {/* Submissions */}

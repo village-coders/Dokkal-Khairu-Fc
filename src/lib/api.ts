@@ -135,6 +135,7 @@ export const api = {
     status: 'upcoming' | 'live' | 'completed';
     matchweek?: number;
     highlights?: string;
+    countdownBanner?: string;
   }): Promise<Match> {
     const res = await fetch(`${API_BASE}/matches`, {
       method: "POST",
@@ -161,6 +162,7 @@ export const api = {
       status?: 'upcoming' | 'live' | 'completed';
       matchweek?: number;
       highlights?: string;
+      countdownBanner?: string;
       homeScore?: number | null;
       awayScore?: number | null;
     }
