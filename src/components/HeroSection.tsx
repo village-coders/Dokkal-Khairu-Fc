@@ -5,7 +5,7 @@ import heroImg2 from "../assets/images/hero-img-2.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[500px] lg:min-h-[calc(100vh-64px)] flex items-center justify-center bg-primary-dark overflow-hidden py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
+    <section className="relative min-h-[680px] lg:min-h-[calc(100vh-64px)] flex items-end sm:items-center justify-center bg-primary-dark overflow-hidden pb-16 sm:pb-12 py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
       {/* Mobile Background bleed image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 sm:hidden"
