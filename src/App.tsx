@@ -15,6 +15,7 @@ import AboutView from "./components/AboutView";
 import AdminLoginView from "./components/AdminLoginView";
 import AdminHub from "./components/AdminHub";
 import PlayersView from "./components/PlayersView";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import { NewsArticle, Match, Player, GalleryItem } from "./types";
 import { api } from "./lib/api";
@@ -91,7 +92,11 @@ function AppLayout() {
           <Route path="/about" element={<AboutView />} />
           <Route path="/players" element={<PlayersView />} />
           <Route path="/admin" element={<AdminLoginView />} />
-          <Route path="/admin/dashboard" element={<AdminHub />} />
+          <Route path="/admin/dashboard" element={
+            <ProtectedRoute>
+              <AdminHub />
+            </ProtectedRoute>
+          } />
           <Route path="*" element={
             <div className="pt-24 pb-12 px-4 text-center">
               <h2 className="font-display text-4xl text-primary font-black uppercase">PAGE NOT FOUND</h2>

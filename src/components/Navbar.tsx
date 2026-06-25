@@ -105,14 +105,14 @@ export default function Navbar() {
       {/* Hamburger Mobile Trigger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden p-2 rounded text-cream hover:text-secondary focus:outline-none cursor-pointer"
+        className="md:hidden p-2 rounded-lg text-cream bg-secondary/10 hover:bg-secondary/20 hover:text-secondary focus:outline-none cursor-pointer transition-colors"
       >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
       </button>
 
       {/* Mobile Menu Slide-Over */}
       {isOpen && (
-        <div className="fixed inset-0 top-16 bg-primary-dark z-50 flex flex-col p-4 sm:p-6 animate-slide-up md:hidden border-t border-secondary/10">
+        <div className="fixed inset-0 top-[72px] bg-primary-dark/95 backdrop-blur-md z-50 flex flex-col p-4 sm:p-6 animate-slide-up md:hidden border-t border-secondary/10 h-[calc(100vh-72px)] overflow-y-auto">
           <div className="flex flex-col space-y-4 sm:space-y-6 mt-4">
             {navLinks.map((link) => (
               <Link

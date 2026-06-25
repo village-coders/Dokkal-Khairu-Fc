@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "./SEO";
 import { Match } from "../types";
 import { api } from "../lib/api";
 import { formatDate } from "../lib/utils";
@@ -67,10 +67,10 @@ export default function MatchesView() {
 
   return (
     <>
-      <Helmet>
-        <title>Fixtures & Results | Dokkal Khairu FC</title>
-        <meta name="description" content="View upcoming fixtures and recent match results for the Khairu Boys." />
-      </Helmet>
+      <SEO 
+        title="Fixtures & Results | Dokkal Khairu FC" 
+        description="View upcoming fixtures and recent match results for the Khairu Boys." 
+      />
     <div className="bg-cream min-h-screen py-8 sm:py-12 px-3 sm:px-6 lg:px-8 mt-16 animate-fade-in text-left">
       <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8 lg:space-y-10">
         

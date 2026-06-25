@@ -96,12 +96,8 @@ export default function AdminHub({}: AdminHubProps) {
   };
 
   useEffect(() => {
-    if (!admin) {
-      navigate('/admin/login');
-      return;
-    }
     loadWorkspaceData();
-  }, [admin]);
+  }, []);
 
   const triggerToast = (text: string, error = false) => {
     setStatusMsg({ text, error });

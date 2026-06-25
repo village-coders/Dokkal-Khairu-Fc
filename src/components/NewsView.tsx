@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "./SEO";
 import { useNavigate } from "react-router-dom";
 import { NewsArticle, PaginatedNews } from "../types";
 import { api } from "../lib/api";
@@ -87,10 +87,10 @@ const [loading, setLoading] = useState(true);
 
   return (
     <>
-      <Helmet>
-        <title>Club News | Dokkal Khairu FC</title>
-        <meta name="description" content="Read the latest updates, match reports, and announcements from Dokkal Khairu FC." />
-      </Helmet>
+      <SEO 
+        title="News & Updates | Dokkal Khairu FC" 
+        description="Get the latest news, match reports, and updates from Dokkal Khairu Football Club." 
+      />
       <div className="bg-cream min-h-screen py-12 px-4 sm:px-6 lg:px-8 mt-[72px] animate-fade-in text-left">
         <div className="max-w-7xl mx-auto space-y-10">
         

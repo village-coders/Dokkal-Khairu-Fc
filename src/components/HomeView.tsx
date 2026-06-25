@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "./SEO";
 import NewsMarquee from "./NewsMarquee";
 import HeroSection from "./HeroSection";
 import NextMatchCountdown from "./NextMatchCountdown";
@@ -32,10 +32,10 @@ export default function HomeView({
 }: HomeViewProps) {
   return (
     <>
-      <Helmet>
-        <title>Dokkal Khairu FC | Official Website</title>
-        <meta name="description" content="Welcome to the official home of Dokkal Khairu FC. The Khairu Boys from Ilé-Ifẹ̀." />
-      </Helmet>
+      <SEO 
+        title="Dokkal Khairu FC | Official Website" 
+        description="Welcome to the official home of Dokkal Khairu FC. The Khairu Boys from Ilé-Ifẹ̀." 
+      />
       <div className="pt-[72px] space-y-0">
         <NewsMarquee articles={allNews} loading={loading} />
         <HeroSection />

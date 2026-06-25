@@ -6,7 +6,7 @@ import clubLogo from "../assets/images/club_logo_crest_1782203456122.jpg";
 
 export default function AdminLoginView() {
   const navigate = useNavigate();
-  const { login, admin } = useAuth();
+  const { login, admin, loading: authLoading } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -45,6 +45,14 @@ export default function AdminLoginView() {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-primary flex flex-col items-center justify-center p-4">
+        <div className="w-12 h-12 border-4 border-secondary/20 border-t-secondary rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-primary-dark min-h-screen flex items-center justify-center py-16 px-4 relative select-none">

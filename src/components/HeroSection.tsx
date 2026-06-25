@@ -1,15 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import heroImg from "../assets/images/hero-img.png";
+import heroImg2 from "../assets/images/hero-img-2.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[calc(100vh-64px)] flex items-center justify-center bg-primary-dark overflow-hidden py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
-      {/* Background bleed image with athletic-navy gradient wash */}
+    <section className="relative min-h-[500px] lg:min-h-[calc(100vh-64px)] flex items-center justify-center bg-primary-dark overflow-hidden py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
+      {/* Mobile Background bleed image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 sm:hidden"
         style={{ 
-          backgroundImage: `linear-gradient(135deg, rgba(5,26,56,0.85) 10%, rgba(5,26,56,0.5) 90%), url(${heroImg})` 
+          backgroundImage: `linear-gradient(135deg, rgba(5,26,56,0.5) 25%, rgba(5,26,56,0.1) 60%), url(${heroImg2})` 
+        }}
+      />
+
+      {/* Desktop Background bleed image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 hidden sm:block"
+        style={{ 
+          backgroundImage: `linear-gradient(135deg, rgba(5,26,56,0.5) 25%, rgba(5,26,56,0.1) 60%), url(${heroImg})` 
         }}
       />
 

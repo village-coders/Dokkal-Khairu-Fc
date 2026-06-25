@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Player } from '../types';
 import { api } from '../lib/api';
+import SEO from './SEO';
 
 const PlayersView: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -30,7 +31,12 @@ const PlayersView: React.FC = () => {
     : players.filter(player => player.position.toUpperCase() === filter);
 
   return (
-    <div className="bg-primary min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <>
+      <SEO 
+        title="First Team Squad | Dokkal Khairu FC" 
+        description="Meet the first team players of Dokkal Khairu Football Club. The Khairu Boys." 
+      />
+      <div className="bg-primary min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Back Button */}
@@ -256,7 +262,8 @@ const PlayersView: React.FC = () => {
         </div>
 
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

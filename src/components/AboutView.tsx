@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "./SEO";
 import { Shield, Medal, MapPin, Users, Flame, Star } from "lucide-react";
 
 export default function AboutView() {
@@ -30,10 +30,10 @@ export default function AboutView() {
 
   return (
     <>
-      <Helmet>
-        <title>About Us | Dokkal Khairu FC</title>
-        <meta name="description" content="Learn about the history and heritage of Dokkal Khairu FC, the pride of Ilé-Ifẹ̀, Osun State." />
-      </Helmet>
+      <SEO 
+        title="About Us | Dokkal Khairu FC" 
+        description="Learn about the history, values, and mission of Dokkal Khairu Football Club, Ilé-Ifẹ̀'s Pride." 
+      />
       <div className="bg-cream min-h-screen py-12 px-4 sm:px-6 lg:px-8 mt-[72px] animate-fade-in text-left">
         <div className="max-w-7xl mx-auto space-y-16">
         

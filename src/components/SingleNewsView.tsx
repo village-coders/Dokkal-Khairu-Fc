@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import SEO from "./SEO";
 import { NewsArticle } from "../types";
 import { api } from "../lib/api";
 import { calculateReadTime, formatDate } from "../lib/utils";
@@ -81,10 +81,36 @@ export default function SingleNewsView() {
 
   return (
     <>
-      <Helmet>
-        <title>{article.title} | Dokkal Khairu FC</title>
-        <meta name="description" content={article.summary} />
-      </Helmet>
+      <SEO 
+        title={`${article.title} | Dokkal Khairu FC`}
+        description={article.summary}
+        type="article"
+        image={article.coverImage?.url || "/dokkal-khairu-logo.jpg"}
+      >
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": article.title,
+            "image": [article.coverImage?.url || "/dokkal-khairu-logo.jpg"],
+            "datePublished": new Date(article.createdAt).toISOString(),
+            "dateModified": new Date(article.updatedAt || article.createdAt).toISOString(),
+            "author": [{
+              "@type": "Organization",
+              "name": "Dokkal Khairu FC",
+              "url": import.meta.env.VITE_FRONTEND_URL || "https://dokkal-khairu-fc.vercel.app"
+            }],
+            "publisher": {
+              "@type": "Organization",
+              "name": "Dokkal Khairu FC",
+              "logo": {
+                "@type": "ImageObject",
+                "url": `${import.meta.env.VITE_FRONTEND_URL || "https://dokkal-khairu-fc.vercel.app"}/dokkal-khairu-logo.jpg`
+              }
+            }
+          })}
+        </script>
+      </SEO>
       <div className="bg-cream min-h-screen py-12 px-4 sm:px-6 lg:px-8 mt-[72px] animate-fade-in text-left">
         <div className="max-w-4xl mx-auto space-y-8 relative">
         
