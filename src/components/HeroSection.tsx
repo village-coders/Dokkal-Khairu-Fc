@@ -37,7 +37,7 @@ export default function HeroSection() {
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-black leading-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] [text-shadow:_0_2px_10px_rgb(0_0_0_/_80%)] sm:drop-shadow-none sm:[text-shadow:none]">
               DOKKAL KHAIRU FC
             </h1>
-            <p className="font-accent italic text-secondary text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-wide drop-shadow-[0_2px_8px_rgba(5,26,56,0.8)] [text-shadow:_0_1px_2px_rgb(5_26_56_/_80%)] sm:drop-shadow-none sm:[text-shadow:none]">
+            <p className="font-accent italic text-secondary text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-wide font-bold sm:font-normal drop-shadow-[0_2px_8px_rgba(5,26,56,0.8)] [text-shadow:_0_1px_2px_rgb(5_26_56_/_80%)] sm:drop-shadow-none sm:[text-shadow:none]">
               Ilé-Ifẹ̀'s Pride. Osun's Glory.
             </p>
           </div>
