@@ -98,240 +98,187 @@ const NextMatchCountdown: React.FC<NextMatchCountdownProps> = ({ upcomingMatch, 
   });
 
   return (
-    <section style={{height: "500px !important"}} className="bg-primary-dark py-8 sm:py-12 px-3 sm:px-6 lg:px-8 border-b border-secondary/10 relative">
-      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 relative z-10">
+    <section className="bg-primary-dark py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-secondary/10 relative overflow-hidden">
+      {/* Subtle ambient background effects */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Component Title */}
-        <div className="text-left space-y-1 sm:space-y-2">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white font-black uppercase tracking-wide">
-            NEXT MATCH COUNTDOWN
+        <div className="text-left space-y-2 mb-10 sm:mb-12">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-black uppercase tracking-wide">
+            NEXT MATCH
           </h2>
-          <div className="w-12 sm:w-16 h-1 bg-secondary rounded" />
+          <div className="w-16 h-1 bg-secondary rounded" />
         </div>
 
-        {/* 50/50 Split Layout */}
-        {/* <div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"
-          style={{
-            background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%)',
-            borderRadius: 'var(--radius-xl)',
-            padding: 'var(--space-6) sm:var(--space-8)',
-            border: '1px solid rgba(255,255,255,0.05)',
-          }}
-        > */}
-          {/* Left Side - Countdown */}
-          <div className="space-y-4 sm:space-y-6"
-             style={{
-            background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%)',
-            borderRadius: 'var(--radius-xl)',
-            padding: 'var(--space-6) sm:var(--space-8)',
-            border: '1px solid rgba(255,255,255,0.05)',
-          }}
-          >
+        {/* Main Countdown Card */}
+        <div className="rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-md shadow-2xl flex flex-col lg:flex-row relative">
+          
+          {/* Subtle Card Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/80 to-transparent pointer-events-none z-0" />
+
+          {/* Left Side - Details & Countdown (z-10 to stay above overlay) */}
+          <div className="w-full lg:w-3/5 p-6 sm:p-10 flex flex-col justify-center space-y-8 z-10 relative">
+            
             {/* Top Info Bar */}
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                <span className="font-condensed" style={{ fontSize: 'var(--text-lg)', color: 'var(--color-gold)', fontWeight: 600, letterSpacing: 'var(--tracking-wide)' }}>
+            <div className="text-center sm:text-left">
+              <div className="inline-block px-3 py-1 bg-secondary/10 border border-secondary/20 rounded-md">
+                <span className="font-condensed text-secondary font-bold tracking-widest text-sm uppercase">
                   {match.competition}
                 </span>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', color: 'var(--color-text-dim)' }}>
-                  Matchweek {match.matchweek || 'TBD'} • 2026 Season
-                </span>
               </div>
+              <p className="mt-3 font-body text-cream/60 text-sm sm:text-base">
+                Matchweek {match.matchweek || 'TBD'} • 2026 Season
+              </p>
             </div>
 
-            {/* Teams vs Board */}
-            <div 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between', 
-                width: '100%',
-                gap: 'var(--space-4)'
-              }}
-            >
-              {/* Team 1 (Dokkal Khairu) */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, minWidth: '100px' }}>
+            {/* Teams VS Board */}
+            <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 w-full py-4">
+              {/* Home Team */}
+              <div className="flex flex-col items-center flex-1 max-w-[120px]">
                 {match.homeTeam?.logo?.url ? (
-                  <img src={match.homeTeam.logo.url} alt={match.homeTeam.name} style={{ width: '70px', height: '70px', objectFit: 'contain', marginBottom: 'var(--space-2)' }} />
+                  <img src={match.homeTeam.logo.url} alt={match.homeTeam.name} className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md mb-3" referrerPolicy="no-referrer" />
                 ) : (
-                  <div 
-                    style={{ 
-                      width: '70px', 
-                      height: '70px', 
-                      borderRadius: '50%', 
-                      backgroundColor: 'var(--color-green)', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '1.5rem',
-                      color: 'var(--color-gold)',
-                      border: '3px solid var(--color-gold)',
-                      boxShadow: 'var(--shadow-gold)',
-                      marginBottom: 'var(--space-2)'
-                    }}
-                  >
-                    DK
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/80 flex items-center justify-center border-2 border-white/20 shadow-lg mb-3">
+                    <span className="font-display text-xl text-white font-bold">DK</span>
                   </div>
                 )}
-                <span className="font-display" style={{ fontSize: 'var(--text-base)', color: 'white', textAlign: 'center', lineHeight: '1.2' }}>
+                <span className="font-display text-base sm:text-lg text-white text-center leading-tight">
                   {match.homeTeam?.name}
                 </span>
               </div>
 
               {/* VS Divider */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="font-display" style={{ fontSize: 'var(--text-xl)', color: 'var(--color-gold)', opacity: 0.8 }}>VS</span>
+              <div className="flex flex-col items-center justify-center px-2">
+                <span className="font-display text-3xl sm:text-4xl text-secondary opacity-90 drop-shadow-lg">VS</span>
               </div>
 
-              {/* Team 2 (Opponent) */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, minWidth: '100px' }}>
+              {/* Away Team */}
+              <div className="flex flex-col items-center flex-1 max-w-[120px]">
                 {match.awayTeam?.logo?.url ? (
-                  <img src={match.awayTeam.logo.url} alt={match.awayTeam.name} style={{ width: '70px', height: '70px', objectFit: 'contain', marginBottom: 'var(--space-2)' }} />
+                  <img src={match.awayTeam.logo.url} alt={match.awayTeam.name} className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md mb-3" referrerPolicy="no-referrer" />
                 ) : (
-                  <div 
-                    style={{ 
-                      width: '70px', 
-                      height: '70px', 
-                      borderRadius: '50%', 
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '1.5rem',
-                      color: 'var(--color-text-muted)',
-                      border: '3px solid var(--color-mid-grey)',
-                      marginBottom: 'var(--space-2)'
-                    }}
-                  >
-                    {opponentName ? opponentName.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase() : 'OP'}
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/5 flex items-center justify-center border-2 border-white/10 mb-3">
+                    <span className="font-display text-xl text-cream/50 font-bold">
+                      {opponentName ? opponentName.substring(0, 2).toUpperCase() : 'OP'}
+                    </span>
                   </div>
                 )}
-                <span className="font-display" style={{ fontSize: 'var(--text-base)', color: 'white', textAlign: 'center', lineHeight: '1.2' }}>
+                <span className="font-display text-base sm:text-lg text-white text-center leading-tight">
                   {match.awayTeam?.name}
                 </span>
               </div>
             </div>
 
             {/* Countdown Clock */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-3) sm:var(--space-4)', flexWrap: 'wrap' }}>
-              
+            <div className="flex justify-center sm:justify-start gap-3 sm:gap-5 flex-wrap">
               {/* Days */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '60px' }}>
-                <div 
-                  className="font-display" 
-                  style={{ 
-                    fontSize: 'var(--text-3xl) sm:var(--text-4xl)', 
-                    color: 'var(--color-gold)', 
-                    background: 'rgba(0,0,0,0.4)', 
-                    padding: 'var(--space-2) sm:var(--space-3) var(--space-3) sm:var(--space-4)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    minWidth: '60px',
-                    textAlign: 'center',
-                    boxShadow: 'var(--shadow-inset)',
-                    lineHeight: '1'
-                  }}
-                >
-                  {String(timeLeft.days).padStart(2, '0')}
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-black/50 border border-white/10 rounded-xl shadow-inner backdrop-blur-sm">
+                  <span className="font-display text-3xl sm:text-4xl text-secondary drop-shadow">
+                    {String(timeLeft.days).padStart(2, '0')}
+                  </span>
                 </div>
-                <span className="font-condensed" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 'var(--space-2)', letterSpacing: 'var(--tracking-wide)' }}>
-                  DAYS
-                </span>
+                <span className="font-condensed text-xs text-cream/50 mt-2 tracking-widest">DAYS</span>
               </div>
 
               {/* Hours */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '60px' }}>
-                <div 
-                  className="font-display" 
-                  style={{ 
-                    fontSize: 'var(--text-3xl) sm:var(--text-4xl)', 
-                    color: 'var(--color-white)', 
-                    background: 'rgba(0,0,0,0.4)', 
-                    padding: 'var(--space-2) sm:var(--space-3) var(--space-3) sm:var(--space-4)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    minWidth: '60px',
-                    textAlign: 'center',
-                    boxShadow: 'var(--shadow-inset)',
-                    lineHeight: '1'
-                  }}
-                >
-                  {String(timeLeft.hours).padStart(2, '0')}
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-black/50 border border-white/10 rounded-xl shadow-inner backdrop-blur-sm">
+                  <span className="font-display text-3xl sm:text-4xl text-white drop-shadow">
+                    {String(timeLeft.hours).padStart(2, '0')}
+                  </span>
                 </div>
-                <span className="font-condensed" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 'var(--space-2)', letterSpacing: 'var(--tracking-wide)' }}>
-                  HOURS
-                </span>
+                <span className="font-condensed text-xs text-cream/50 mt-2 tracking-widest">HOURS</span>
               </div>
 
               {/* Minutes */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '60px' }}>
-                <div 
-                  className="font-display" 
-                  style={{ 
-                    fontSize: 'var(--text-3xl) sm:var(--text-4xl)', 
-                    color: 'var(--color-white)', 
-                    background: 'rgba(0,0,0,0.4)', 
-                    padding: 'var(--space-2) sm:var(--space-3) var(--space-3) sm:var(--space-4)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    minWidth: '60px',
-                    textAlign: 'center',
-                    boxShadow: 'var(--shadow-inset)',
-                    lineHeight: '1'
-                  }}
-                >
-                  {String(timeLeft.minutes).padStart(2, '0')}
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-black/50 border border-white/10 rounded-xl shadow-inner backdrop-blur-sm">
+                  <span className="font-display text-3xl sm:text-4xl text-white drop-shadow">
+                    {String(timeLeft.minutes).padStart(2, '0')}
+                  </span>
                 </div>
-                <span className="font-condensed" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 'var(--space-2)', letterSpacing: 'var(--tracking-wide)' }}>
-                  MINS
-                </span>
+                <span className="font-condensed text-xs text-cream/50 mt-2 tracking-widest">MINS</span>
               </div>
 
               {/* Seconds */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '60px' }}>
-                <div 
-                  className="font-display animate-pulse-live" 
-                  style={{ 
-                    fontSize: 'var(--text-3xl) sm:var(--text-4xl)', 
-                    color: 'var(--color-green-light)', 
-                    background: 'rgba(0,0,0,0.4)', 
-                    padding: 'var(--space-2) sm:var(--space-3) var(--space-3) sm:var(--space-4)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    minWidth: '60px',
-                    textAlign: 'center',
-                    boxShadow: 'var(--shadow-inset)',
-                    lineHeight: '1'
-                  }}
-                >
-                  {String(timeLeft.seconds).padStart(2, '0')}
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-black/50 border border-secondary/30 rounded-xl shadow-[inset_0_0_15px_rgba(212,160,23,0.1)] backdrop-blur-sm">
+                  <span className="font-display text-3xl sm:text-4xl text-green-400 drop-shadow animate-pulse-live">
+                    {String(timeLeft.seconds).padStart(2, '0')}
+                  </span>
                 </div>
-                <span className="font-condensed" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 'var(--space-2)', letterSpacing: 'var(--tracking-wide)' }}>
-                  SECS
-                </span>
+                <span className="font-condensed text-xs text-cream/50 mt-2 tracking-widest">SECS</span>
               </div>
-
             </div>
 
-            {/* Venue & Action Details */}
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                📍 <strong>Venue:</strong> {match.venue}
-              </span>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', color: 'var(--color-text-dim)' }}>
-                Kickoff Date: {formattedDate}
+            {/* Venue Details */}
+            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-secondary/10 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-display text-sm text-cream/60">VENUE</p>
+                  <p className="font-body text-base text-white">{match.venue}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 text-right">
+                <div className="sm:hidden p-2 bg-secondary/10 rounded-full">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-display text-sm text-cream/60 sm:text-right text-left">KICKOFF</p>
+                  <p className="font-body text-base text-white sm:text-right text-left">{formattedDate}</p>
+                </div>
+                 <div className="hidden sm:block p-2 bg-secondary/10 rounded-full">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Side - Banner Image / Stadium Background */}
+          <div className="w-full lg:w-2/5 min-h-[300px] lg:min-h-full relative overflow-hidden bg-primary">
+            {/* The image is conditionally set to the match banner or a default gradient/image */}
+            {match.countdownBanner ? (
+               <img 
+                 src={match.countdownBanner} 
+                 alt="Match Banner" 
+                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+                 referrerPolicy="no-referrer"
+               />
+            ) : (
+               <img 
+                 src={defaultBanner} 
+                 alt="Match Banner Default" 
+                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+                 referrerPolicy="no-referrer"
+               />
+            )}
+            {/* Dark gradient overlay blending the image into the left card edge on desktop */}
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-primary-dark/90 lg:from-primary-dark via-primary-dark/40 lg:via-primary-dark/40 to-transparent" />
+            
+            {/* Decorative Label */}
+            <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 bg-black/60 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg pointer-events-none hidden sm:block">
+              <span className="font-display text-sm text-secondary uppercase tracking-widest flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                Matchday Live
               </span>
             </div>
           </div>
 
-          {/* Right Side - Banner Image */}
-          
-
-        {/* </div> */}
-
+        </div>
       </div>
     </section>
   );
